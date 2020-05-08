@@ -38,7 +38,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function (webpackEnv) {
+module.exports = webpackEnv => {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -291,8 +291,12 @@ module.exports = function (webpackEnv) {
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
-        { parser: { requireEnsure: false } },
-
+        {
+          parser:
+          {
+            requireEnsure: false
+          }
+        },
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
@@ -302,7 +306,7 @@ module.exports = function (webpackEnv) {
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
             {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+              test: [/\.jpe?g$/, /\.png$/],
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
@@ -360,7 +364,9 @@ module.exports = function (webpackEnv) {
                 presets: [
                   [
                     require.resolve('babel-preset-react-app/dependencies'),
-                    { helpers: true }
+                    {
+                      helpers: true
+                    }
                   ]
                 ],
                 cacheDirectory: true,
