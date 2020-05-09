@@ -25,19 +25,17 @@ import Hit from '../components/Hit'
 import NotFound from '../components/NotFound'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-        localStorage.getItem('token') ? (
-            <Component {...props} />
-        ) : (
-                <Redirect to={{
-                    pathname: '/signIn',
-                    state: { from: props.location }
-                }} />
-            )
-    )} />
+    <Route {...rest} render={props =>
+        localStorage.getItem('token') ?
+            <Component {...props} /> :
+            <Redirect to={{
+                pathname: '/signIn',
+                state: { from: props.location }
+            }} />
+    } />
 )
 
-const Routers = () => (
+const Routers = () =>
     <ConfigProvider locale={zhCN}>
         <Router>
             <Layout style={{ width: '100%', height: '100%', position: 'absolute' }}>
@@ -78,6 +76,5 @@ const Routers = () => (
             </Layout>
         </Router>
     </ConfigProvider>
-)
 
 export default Routers
